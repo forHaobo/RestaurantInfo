@@ -18,6 +18,30 @@ public class StudentServiceImpl implements StudentService {
      */
     @Override
     public Student login(Student student) {
-        return studentDao.findStudentById(student.getSnum(), student.getPassword());
+        return studentDao.findStudentByIdAndPassword(student.getSnum(), student.getPassword());
+    }
+
+    /**
+     * 用户注册功能
+     * @param student
+     */
+    @Override
+    public boolean regist(Student student) {
+        //看有无重负用户
+        Student student1 = studentDao.findStudentBySnum(student.getSnum());
+        if (student1 != null){
+            return false;
+        }
+        studentDao.saveStudent(student);
+        return true;
+    }
+
+    /**
+     * 用户充值
+     * @param student
+     */
+    @Override
+    public void recharge(Student student, int money) {
+        studentDao.recharge(student.getSnum(), money);
     }
 }

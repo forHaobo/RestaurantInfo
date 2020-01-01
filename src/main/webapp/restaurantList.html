@@ -24,12 +24,88 @@
             text-align: center;
         }
     </style>
+    <script>
+        $(function () {
+           load(1);
+        });
+        function buy(rnum) {
 
+        }
+        function load(currentPage) {
+            //1.发送ajax请求
+            $.post("restaurant/pageQueryFood",{currentPage : currentPage}, function (pb) {
+                //解析pegebean展示数据
+
+                /**
+                 * 1.分页工具条展示
+                 */
+                //1.1显示页码总数和总记录数
+                $("#totalPage").html(pb.totalPage);
+                $("#totalCount").html(pb.totalCount);
+
+
+                var lis = "";
+                //计算上一页吗
+                var beforeNum = pb.currentPage - 1;
+                if (beforeNum <= 0) {
+                    beforeNum = 1;
+                }
+                var beforePage = '<li onclick="javascript:load('+ beforeNum+')">' +
+                    '                <a href="javascript:void(0)" aria-label="Previous">' +
+                    '                    <span aria-hidden="true">&laquo;</span>' +
+                    '                </a>' +
+                    '            </li>';
+                lis += beforePage;
+                //1.2显示页码条
+                for (var i = 1; i <= pb.totalPage; i++) {
+                    var li;
+                    li = '<li onclick="javascript:load('+ i+')"><a href="javascript:void(0)">'+ i+'</a></li>';
+                    lis += li;
+                }
+                //计算下页页码
+                var afterNum = pb.currentPage + 1;
+                if (afterNum >= pb.totalPage) {
+                    afterNum = pb.totalPage;
+                }
+                var afterPage = '<li onclick="javascript:load('+ afterNum+')">' +
+                    '                <a href="javascript:void(0)" aria-label="Next" >' +
+                    '                    <span aria-hidden="true">&raquo;</span>' +
+                    '                </a>' +
+                    '            </li>';
+                lis += afterPage;
+
+                //将lis内容设置到ul
+                $("#pageNum").html(lis);
+
+                /**
+                 * 列表内容展示
+                 */
+                var rList = '<tr class="success">' +
+                    '            <th>窗口号</th>' +
+                    '            <th>窗口名</th>' +
+                    '            <th>价格(元)</th>' +
+                    '            <th>操作</th>' +
+                    '        </tr>';
+
+                for (var i = 0; i < pb.list.length; i++){
+                    var r = pb.list[i];
+                    var li = '<tr>' +
+                        '            <td>'+ r.rnum+'</td>' +
+                        '            <td>'+ r.rname+'</td>' +
+                        '            <td>'+ r.rmoney+'</td>' +
+                        '            <td><a class="btn btn-default btn-sm" href="javascript:buy('+ r.rnum+')">购买</a></td>' +
+                        '        </tr>';
+                    rList += li;
+                }
+                $("#foodTable").html(rList);
+            });
+        }
+    </script>
 </head>
 <body>
 <div class="container">
     <h2 style="text-align: center">食堂买饭窗口</h2>
-    <table class="table table-hover">
+    <table class="table table-hover" id="foodTable">
         <tr class="success">
             <th>窗口号</th>
             <th>窗口名</th>
@@ -45,8 +121,7 @@
     </table>
     </table>
     <nav aria-label="Page navigation">
-        <ul class="pagination">
-
+        <ul class="pagination" id="pageNum">
             <li>
                 <a href="#" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
@@ -58,7 +133,7 @@
             <li><a href="#">4</a></li>
             <li><a href="#">5</a></li>
             <li>
-                <a href="#" aria-label="Next">
+                <a href="#" aria-label="Next" >
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

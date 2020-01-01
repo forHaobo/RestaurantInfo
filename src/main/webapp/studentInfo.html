@@ -14,6 +14,36 @@
     <script src="js/bootstrap.min.js"></script>
     <script type="text/javascript">
     </script>
+    <script>
+        function lossCard(){
+            //挂失
+            if (confirm("确定要挂失吗？")) {
+                $("#sable").html("丢失")
+            }
+        }
+        function rCard(){
+            //补卡
+            if (confirm("确定要补卡吗？")) {
+                $("#sable").html("正常")
+            }
+        }
+
+        $(function () {
+            //页面显示
+            $.post("student/info",function (student) {
+                $("#sname").html(student.sname);
+                $("#snum").html(student.snum);
+                $("#cmoney").html(student.cmoney);
+            });
+
+            //充值
+            $("#but_recharge").click(function () {
+                $.post("student/recharge",$(rechargeForm).serialize(),function (data) {
+                    $("#cmoney").html(data);
+                });
+            });
+        });
+    </script>
 </head>
 <body>
 <div class="container" style="width: 500px;">
@@ -22,7 +52,7 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">姓名</div>
-        <div class="panel-body">
+        <div class="panel-body" id="sname">
             李昊波
         </div>
     </div>
@@ -30,29 +60,38 @@
         <div class="panel-heading">
             <h3 class="panel-title">学号</h3>
         </div>
-        <div class="panel-body">
+        <div class="panel-body" id="snum">
             4179010212
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">余额(元)</h3>
-        </div>
-        <div class="panel-body">
-            120
         </div>
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">状态</h3>
         </div>
-        <div class="panel-body">
+        <div class="panel-body" id="sable">
             正常
         </div>
     </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title" >余额(元)</h3>
+        </div>
+        <div class="panel-body" id="cmoney">
+            120
+        </div>
+    </div>
+
+    <form id="rechargeForm">
+    <div class="form-group">
+        <input type="text" name="recharge" class="form-control" id="recharge" placeholder="请输入充值金额"/>
+    </div>
+        <button type="button" id="but_recharge" class="btn btn btn-primary">饭卡充值</button>
+    </form>
+
     <div class="form-group" style="text-align: center;">
-        <button type="button" id="but_sub" class="btn btn btn-primary" type="submit" >消费记录</button>
-        <button type="button" id="but_reg" class="btn btn btn-primary" type="submit" >饭卡挂失</button>
+        <a href="list.html"><button type="button" id="but_log" class="btn btn btn-primary" >消费记录</button></a>
+        <a href="javascript:lossCard();" ><button type="button" id="but_loss" class="btn btn btn-primary" >挂失</button></a>
+        <a href="javascript:rCard();" ><button type="button" id="but_loss" class="btn btn btn-primary" >补卡</button></a>
     </div>
 </div>
 </body>

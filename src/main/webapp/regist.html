@@ -15,14 +15,97 @@
     <script src="js/bootstrap.min.js"></script>
     <script type="text/javascript">
     </script>
+	  <script>
+		  //判断学号
+		  function checkSnum(){
+		  	//1. 获取snum
+			  var snum = $("#snum").val();
+			  //2.定义正则
+			  var reg_snum = /^\w{2,10}$/;
+			  var flag = reg_snum.test(snum);
+			  //判断是否合法
+			  if (flag) {
+			  	//合法还原边框
+				  $("#snum").css("border", " ");
+			  }else {
+			  	$("#snum").css("border", "1px solid red");
+			  }
+			  return flag;
+		  }
+		  //判断密码
+		  function checkPassword(){
+			  //1. 获取password
+			  var password = $("#password").val();
+			  var reg_password = /^\w{4,20}$/;
+			  //判断是否合法
+			  var flag = reg_password.test(password);
+			  if (flag) {
+				  //合法还原边框
+				  $("#password").css("border", "");
+
+			  }else {
+				  $("#password").css("border", "1px solid red");
+			  }
+			  return flag;
+		  }
+		  //判断确认密码
+		  //判断密码
+		  function checkRePassword(){
+			  //1. 获取rePassword
+			  var rePassword = $("#rePassword").val();
+			  //获取password
+			  var password = $("#password").val();
+			  //判断是否合法
+			  if (rePassword == password) {
+				  //合法还原边框
+				  $("#rePassword").css("border", "");
+				  return true;
+			  }else {
+				  $("#rePassword").css("border", "1px solid red");
+				  return false;
+			  }
+		  }
+
+		  $(function () {
+			  //给注册按钮绑定单机事件
+			  $("#but_sub").click(function () {
+			  	if (checkSnum() && checkPassword() && checkRePassword()) {
+			  		//输入合法，则发送ajax请求
+					$.post("student/regist", $(registForm).serialize(), function(data){
+						if (data.flag) {
+							//注册成功
+							location.href = "login.html";
+						}else {
+							//注册失败
+							var msg = '<div class="alert alert-warning alert-dismissible" role="alert">' +
+									'<button type="button" class="close" data-dismiss="alert" >' +
+									'<span>&times;</span>' +
+									'</button>' +
+									'<strong>'+ data.errorMsg+'</strong>' +
+									'</div>'
+							$("#errorMsg").html(msg);
+						}
+					});
+				}
+			  });
+
+			  //当某一个组件是去焦点时调用该组件校验方法
+			  $("#snum").blur(checkSnum);
+			  $("#password").blur(checkPassword);
+			  $("#rePassword").blur(checkRePassword);
+		  });
+
+	  </script>
+
+
   </head>
   <body>
   	<div class="container" style="width: 400px;">
   		<h3 style="text-align: center;">学生注册</h3>
-        <form action="login" method="post" id="loginForm">
+        <form  method="post" id="registForm">
 	      <div class="form-group">
-	        <label for="user">学号：</label>
-	        <input type="text" name="user" class="form-control" id="user" placeholder="请输入用户名"/>
+			  <label for="snum">学号：</label>
+			  <input type="text" name="snum" class="form-control" id="snum" placeholder="请输入学号"/>
 	      </div>
 	      
 	      <div class="form-group">
@@ -30,7 +113,7 @@
 	        <input type="password" name="password" class="form-control" id="password" placeholder="请输入密码"/>
 	      </div>
 			<div class="form-group">
-				<label for="password">确认密码：</label>
+				<label for="rePassword">确认密码：</label>
 				<input type="password" name="password" class="form-control" id="rePassword" placeholder="请再次输入密码"/>
 			</div>
 			<div class="form-group">
@@ -40,16 +123,13 @@
 
 	      <hr/>
 	      <div class="form-group" style="text-align: center;">
-			  <button type="button" id="but_sub" class="btn btn btn-primary" type="submit" >注册</button>
+			  <button type="button" id="but_sub" class="btn btn btn-primary" >注册</button>
 		  </div>
 	  	</form>
-		
+
 		<!-- 出错显示的信息框 -->
-	  	<div class="alert alert-warning alert-dismissible" role="alert">
-		  <button type="button" class="close" data-dismiss="alert" >
-		  	<span>&times;</span>
-		  </button>
-		   <strong id="errorMsg"></strong>
+		<div id="errorMsg">
+
 		</div>
   	</div>
   </body>
