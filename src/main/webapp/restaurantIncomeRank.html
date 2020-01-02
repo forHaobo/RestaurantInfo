@@ -11,7 +11,7 @@
     initial-scale: 初始的缩放比，为1:1 -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>食堂窗口收入</title>
+    <title>食堂窗口收入排行</title>
 
     <!-- 1. 导入CSS的全局样式 -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -30,7 +30,7 @@
         }
         function load(currentPage) {
             //1.发送ajax请求
-            $.post("restaurant/pageQueryFood",{currentPage : currentPage}, function (pb) {
+            $.post("restaurant/pageQueryFoodRank",{currentPage : currentPage}, function (pb) {
                 //解析pegebean展示数据
 
                 /**
@@ -108,11 +108,11 @@
         <li role="presentation" ><a href="studentInfo.html">学生信息</a></li>
         <li role="presentation" ><a href="list.html">用户消费充值记录</a></li>
         <li role="presentation"><a href="restaurantList.html">食堂窗口</a></li>
-        <li role="presentation" class="active"><a href="restaurantIncome.html">食堂收入统计</a></li>
-        <li role="presentation" ><a href="restaurantIncomeRank.html">食堂收入排行</a></li>
+        <li role="presentation" ><a href="restaurantIncome.html">食堂收入统计</a></li>
+        <li role="presentation" class="active"><a href="restaurantIncomeRank.html">食堂收入排行</a></li>
         <li role="presentation"><a href="hello.html">退出登录</a></li>
     </ul>
-    <h2 style="text-align: center">食堂窗口收入统计</h2>
+    <h2 style="text-align: center">食堂窗口收入排行</h2>
     <table class="table table-hover" id="foodTable">
         <tr class="success">
             <th>窗口号</th>

@@ -38,6 +38,7 @@ public class Expenses {
         return "Expenses{" +
                 "rnum='" + rnum + '\'' +
                 ", snum='" + snum + '\'' +
+                ", emsg='" + emsg + '\'' +
                 '}';
     }
 }

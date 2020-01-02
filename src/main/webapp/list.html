@@ -24,57 +24,162 @@
             text-align: center;
         }
     </style>
+    <script>
+        // function del(snum) {
+        //
+        // }
+        // function load(currentPage) {
+        //     //1.发送ajax请求
+        //     $.post("student/pageQueryLog",{currentPage : currentPage}, function (pb) {
+        //         //解析pegebean展示数据
+        //
+        //         /**
+        //          * 1.分页工具条展示
+        //          */
+        //         // //1.1显示页码总数和总记录数
+        //         // $("#totalPage").html(pb.totalPage);
+        //         // $("#totalCount").html(pb.totalCount);
+        //
+        //         var lis = "";
+        //         //计算上一页吗
+        //         var beforeNum = pb.currentPage - 1;
+        //         if (beforeNum <= 0) {
+        //             beforeNum = 1;
+        //         }
+        //         var beforePage = '<li onclick="javascript:load('+ beforeNum+')">' +
+        //             '                <a href="javascript:void(0)" aria-label="Previous">' +
+        //             '                    <span aria-hidden="true">&laquo;</span>' +
+        //             '                </a>' +
+        //             '            </li>';
+        //         lis += beforePage;
+        //         //1.2显示页码条
+        //         for (var i = 1; i <= pb.totalPage; i++) {
+        //             var li;
+        //             li = '<li onclick="javascript:load('+ i+')"><a href="javascript:void(0)">'+ i+'</a></li>';
+        //             lis += li;
+        //         }
+        //         //计算下页页码
+        //         var afterNum = pb.currentPage + 1;
+        //         if (afterNum >= pb.totalPage) {
+        //             afterNum = pb.totalPage;
+        //         }
+        //         var afterPage = '<li onclick="javascript:load('+ afterNum+')">' +
+        //             '                <a href="javascript:void(0)" aria-label="Next" >' +
+        //             '                    <span aria-hidden="true">&raquo;</span>' +
+        //             '                </a>' +
+        //             '            </li>';
+        //         lis += afterPage;
+        //
+        //         //将lis内容设置到ul
+        //         $("#pageNum").html(lis);
+        //
+        //         /**
+        //          * 列表内容展示
+        //          */
+        //         var rList = '<tr class="success">' +
+        //             '            <th>编号</th>' +
+        //             '            <th>姓名</th>' +
+        //             '            <th>学号</th>' +
+        //             '            <th>余额(元)</th>' +
+        //             '            <th>记录</th>' +
+        //             '            <th>操作</th>' +
+        //             '        </tr>';
+        //
+        //         for (var i = 0; i < pb.list.length; i++){
+        //             var r = pb.list[i];
+        //             var li = '<tr>' +
+        //                 '            <td>'+ i+'</td>' +
+        //                 '            <td>'+ r.rname+'</td>' +
+        //                 '            <td>'+ r.rnum+'</td>' +
+        //                 '            <td>'+ r.rmoney+'</td>' +
+        //                 '            <td>'+ r.emsg+'</td>' +
+        //                 '            <td><a class="btn btn-default btn-sm" href="javascript:del('+r.rnum+')">删除</a></td>' +
+        //                 '        </tr>';
+        //             rList += li;
+        //         }//'+ r.rnum+','+ r.rmoney+','+ r.rname+'
+        //         $("#expensesTable").html(rList);
+        //     });
+        // }
+        // $(function () {
+        //     load(1);
+        // });
+
+        $(function () {
+            $.post("student/QueryLog", null,function (data) {
+                var rList = '<tr class="success">' +
+                    '            <th>编号</th>' +
+                    '            <th>姓名</th>' +
+                    '            <th>学号</th>' +
+                    '            <th>记录</th>' +
+                    '            <th>操作</th>' +
+                    '        </tr>';
+                for (var i = 0; i < data.list.length; i++){
+                    var r = data.list[i];
+                    var li = '<tr>' +
+                        '            <td>'+ i+'</td>' +
+                        '            <td>'+ r.sname+'</td>' +
+                        '            <td>'+ r.snum+'</td>' +
+                        '            <td>'+ r.emsg+'</td>' +
+                        '            <td><a class="btn btn-default btn-sm" href="javascript:del('+r.snum+')">删除</a></td>' +
+                        '        </tr>';
+                    rList += li;
+                }//'+ r.rnum+','+ r.rmoney+','+ r.rname+'
+                $("#expensesTable").html(rList);
+            });
+        });
+    </script>
 
 </head>
 <body>
 <div class="container">
-    <div id="header"></div>
+    <ul class="nav nav-tabs">
+        <li role="presentation" ><a href="studentInfo.html">学生信息</a></li>
+        <li role="presentation" class="active"><a href="list.html">用户消费充值记录</a></li>
+        <li role="presentation"><a href="restaurantList.html">食堂窗口</a></li>
+        <li role="presentation"><a href="restaurantIncome.html">食堂收入统计</a></li>
+        <li role="presentation" ><a href="restaurantIncomeRank.html">食堂收入排行</a></li>
+        <li role="presentation"><a href="hello.html">退出登录</a></li>
+    </ul>
     <h3 style="text-align: center">用户消费充值记录</h3>
-    <table border="1" class="table table-bordered table-hover">
-        <tr class="success">
-            <th>编号</th>
-            <th>姓名</th>
-            <th>学号</th>
-            <th>金额(元)</th>
-            <th>记录</th>
-            <th>操作</th>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>张三</td>
-            <td>43141414</td>
-            <td>13</td>
-            <td>买面条</td>
-            <td><a class="btn btn-default btn-sm" href="update.html">修改</a>&nbsp;<a class="btn btn-default btn-sm" href="">删除</a></td>
-        </tr>
+    <table border="1" class="table table-bordered table-hover" id="expensesTable">
+<!--        <tr class="success">-->
+<!--            <th>编号</th>-->
+<!--            <th>姓名</th>-->
+<!--            <th>学号</th>-->
+<!--            <th>记录</th>-->
+<!--            <th>操作</th>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td>1</td>-->
+<!--            <td>张三</td>-->
+<!--            <td>43141414</td>-->
+<!--            <td>买面条</td>-->
+<!--            <td><a class="btn btn-default btn-sm" href="">删除</a></td>-->
+<!--        </tr>-->
 
 <!--        <tr>-->
 <!--            <td colspan="8" align="center"><a class="btn btn-primary" href="add.html">添加联系人</a></td>-->
 <!--        </tr>-->
     </table>
-    <nav aria-label="Page navigation">
-        <ul class="pagination">
-
-            <li>
-                <a href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li>
-                <a href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-    <span style="font-size: 20px;margin-left: 5px;">
-        <i></i>共<span id="totalPage"> </span>页<span id="totalCount"> </span>条
-    </span>
+<!--    <nav aria-label="Page navigation">-->
+<!--        <ul class="pagination" id="pageNum">-->
+<!--            <li>-->
+<!--                <a href="#" aria-label="Previous">-->
+<!--                    <span aria-hidden="true">&laquo;</span>-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            <li><a href="#">1</a></li>-->
+<!--            <li><a href="#">2</a></li>-->
+<!--            <li><a href="#">3</a></li>-->
+<!--            <li><a href="#">4</a></li>-->
+<!--            <li><a href="#">5</a></li>-->
+<!--            <li>-->
+<!--                <a href="#" aria-label="Next" >-->
+<!--                    <span aria-hidden="true">&raquo;</span>-->
+<!--                </a>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </nav>-->
 </div>
 </body>
 </html>
