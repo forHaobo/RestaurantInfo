@@ -7,7 +7,6 @@ import service.StudentService;
 import service.impl.RestaurantServiceImpl;
 import service.impl.StudentServiceImpl;
 
-import javax.jws.soap.SOAPBinding;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -126,14 +125,13 @@ public class StudentServlet extends BaseServlet {
         request.getSession().setAttribute("student", student);
         //2.获取页面信息
         int money = Integer.parseInt(request.getParameter("recharge"));
+        int rmoney = money + student.getCmoney();
+        //3.调用service充值
+        studentService.recharge(student, rmoney);
         //4.设置充值记录
         restaurantService.setInExpenses(student.getSnum(), money);
 
-        money = money + student.getCmoney();
-        //3.调用service充值
-        studentService.recharge(student, money);
-
-        writeValue(money, response);
+        writeValue(rmoney, response);
     }
 
     /**
@@ -199,14 +197,13 @@ public class StudentServlet extends BaseServlet {
         //2.查询消费记录
         List<Expenses> expensesList = restaurantService.findBySnum(student);
         //3.封装返回信息
-
         List<UserExpenses> userExpensesList = new ArrayList<UserExpenses>();
         for (int i = 0; i < expensesList.size(); i++) {
             UserExpenses userExpenses = new UserExpenses();
             userExpenses.setSname(student.getSname());
             userExpenses.setSnum(student.getSnum());
             userExpenses.setEmsg(expensesList.get(i).getEmsg());
-
+            userExpenses.setMoney(expensesList.get(i).getMoney());
             userExpensesList.add(userExpenses);
         }
 

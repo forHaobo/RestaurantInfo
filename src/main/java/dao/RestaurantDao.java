@@ -19,7 +19,6 @@ public interface RestaurantDao {
      */
     public List<Restaurant> findByPage(int start);
     public List<Restaurant> findByPageRank(int start);
-
     /**
      * 根据rnum查询
      */
@@ -37,7 +36,7 @@ public interface RestaurantDao {
      * @param rnum
      * @param rname
      */
-    void setExpenses(String snum, int rnum, String rname);
+    void setExpenses(String snum, int rnum, String rname, int money);
 
     /**
      * 查询消费记录

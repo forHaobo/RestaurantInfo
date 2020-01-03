@@ -1,7 +1,9 @@
 package service.impl;
 
 import dao.RestaurantDao;
+import dao.StudentDao;
 import dao.StudentDaoImpl.RestaurantDaoImpl;
+import dao.StudentDaoImpl.StudentDaoImpl;
 import daomain.Expenses;
 import daomain.PageBean;
 import daomain.Restaurant;
@@ -16,6 +18,7 @@ import java.util.List;
  */
 public class RestaurantServiceImpl implements RestaurantService {
     RestaurantDao restaurantDao = new RestaurantDaoImpl();
+    StudentDao studentDao = new StudentDaoImpl();
     private String snum;
     private int money;
 
@@ -88,7 +91,8 @@ public class RestaurantServiceImpl implements RestaurantService {
     public void setExpenses(String snum, int rnum) {
         Restaurant restaurant = restaurantDao.findByRnum(rnum);
         String rname = restaurant.getRname();
-        restaurantDao.setExpenses(snum, rnum, "买了"+rname);
+        Student student = studentDao.findStudentBySnum(snum);
+        restaurantDao.setExpenses(snum, rnum, "买了"+rname, student.getCmoney());
     }
     /**
      * 设置充值消费记录
@@ -98,7 +102,8 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public void setInExpenses(String snum, int money) {
         String msg = "充值" + money;
-        restaurantDao.setExpenses(snum, 0, msg);
+        Student student = studentDao.findStudentBySnum(snum);
+        restaurantDao.setExpenses(snum, 0, msg,student.getCmoney());
     }
 
     /**

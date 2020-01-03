@@ -66,9 +66,9 @@ public class RestaurantDaoImpl implements RestaurantDao {
      * @param rname
      */
     @Override
-    public void setExpenses(String snum, int rnum, String rname) {
-        String sql = "insert expenses(rnum, snum, emsg) value(?, ?, ?) ";
-        template.update(sql,rnum, snum, rname);
+    public void setExpenses(String snum, int rnum, String rname, int money) {
+        String sql = "insert expenses(rnum, snum, emsg, money) value(?, ?, ?, ?) ";
+        template.update(sql,rnum, snum, rname, money);
     }
 
     /**

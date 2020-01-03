@@ -8,6 +8,7 @@ public class Expenses {
     private String rnum;
     private String snum;
     private String emsg;
+    private int money;
 
     public String getRnum() {
         return rnum;
@@ -33,12 +34,21 @@ public class Expenses {
         this.emsg = emsg;
     }
 
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
     @Override
     public String toString() {
         return "Expenses{" +
                 "rnum='" + rnum + '\'' +
                 ", snum='" + snum + '\'' +
                 ", emsg='" + emsg + '\'' +
+                ", money=" + money +
                 '}';
     }
 }

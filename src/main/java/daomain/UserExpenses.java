@@ -10,6 +10,7 @@ public class UserExpenses {
     private String sname;
     private String snum;
     private String emsg;
+    private int money;
 
     public String getEmsg() {
         return emsg;
@@ -35,6 +36,13 @@ public class UserExpenses {
         this.snum = snum;
     }
 
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
 
     @Override
     public String toString() {
@@ -42,6 +50,7 @@ public class UserExpenses {
                 "sname='" + sname + '\'' +
                 ", snum='" + snum + '\'' +
                 ", emsg='" + emsg + '\'' +
+                ", money=" + money +
                 '}';
     }
 }

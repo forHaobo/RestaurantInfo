@@ -25,84 +25,7 @@
         }
     </style>
     <script>
-        // function del(snum) {
-        //
-        // }
-        // function load(currentPage) {
-        //     //1.发送ajax请求
-        //     $.post("student/pageQueryLog",{currentPage : currentPage}, function (pb) {
-        //         //解析pegebean展示数据
-        //
-        //         /**
-        //          * 1.分页工具条展示
-        //          */
-        //         // //1.1显示页码总数和总记录数
-        //         // $("#totalPage").html(pb.totalPage);
-        //         // $("#totalCount").html(pb.totalCount);
-        //
-        //         var lis = "";
-        //         //计算上一页吗
-        //         var beforeNum = pb.currentPage - 1;
-        //         if (beforeNum <= 0) {
-        //             beforeNum = 1;
-        //         }
-        //         var beforePage = '<li onclick="javascript:load('+ beforeNum+')">' +
-        //             '                <a href="javascript:void(0)" aria-label="Previous">' +
-        //             '                    <span aria-hidden="true">&laquo;</span>' +
-        //             '                </a>' +
-        //             '            </li>';
-        //         lis += beforePage;
-        //         //1.2显示页码条
-        //         for (var i = 1; i <= pb.totalPage; i++) {
-        //             var li;
-        //             li = '<li onclick="javascript:load('+ i+')"><a href="javascript:void(0)">'+ i+'</a></li>';
-        //             lis += li;
-        //         }
-        //         //计算下页页码
-        //         var afterNum = pb.currentPage + 1;
-        //         if (afterNum >= pb.totalPage) {
-        //             afterNum = pb.totalPage;
-        //         }
-        //         var afterPage = '<li onclick="javascript:load('+ afterNum+')">' +
-        //             '                <a href="javascript:void(0)" aria-label="Next" >' +
-        //             '                    <span aria-hidden="true">&raquo;</span>' +
-        //             '                </a>' +
-        //             '            </li>';
-        //         lis += afterPage;
-        //
-        //         //将lis内容设置到ul
-        //         $("#pageNum").html(lis);
-        //
-        //         /**
-        //          * 列表内容展示
-        //          */
-        //         var rList = '<tr class="success">' +
-        //             '            <th>编号</th>' +
-        //             '            <th>姓名</th>' +
-        //             '            <th>学号</th>' +
-        //             '            <th>余额(元)</th>' +
-        //             '            <th>记录</th>' +
-        //             '            <th>操作</th>' +
-        //             '        </tr>';
-        //
-        //         for (var i = 0; i < pb.list.length; i++){
-        //             var r = pb.list[i];
-        //             var li = '<tr>' +
-        //                 '            <td>'+ i+'</td>' +
-        //                 '            <td>'+ r.rname+'</td>' +
-        //                 '            <td>'+ r.rnum+'</td>' +
-        //                 '            <td>'+ r.rmoney+'</td>' +
-        //                 '            <td>'+ r.emsg+'</td>' +
-        //                 '            <td><a class="btn btn-default btn-sm" href="javascript:del('+r.rnum+')">删除</a></td>' +
-        //                 '        </tr>';
-        //             rList += li;
-        //         }//'+ r.rnum+','+ r.rmoney+','+ r.rname+'
-        //         $("#expensesTable").html(rList);
-        //     });
-        // }
-        // $(function () {
-        //     load(1);
-        // });
+
 
         $(function () {
             $.post("student/QueryLog", null,function (data) {
@@ -111,6 +34,7 @@
                     '            <th>姓名</th>' +
                     '            <th>学号</th>' +
                     '            <th>记录</th>' +
+                    '            <th>余额</th>' +
                     '            <th>操作</th>' +
                     '        </tr>';
                 for (var i = 0; i < data.list.length; i++){
@@ -120,6 +44,7 @@
                         '            <td>'+ r.sname+'</td>' +
                         '            <td>'+ r.snum+'</td>' +
                         '            <td>'+ r.emsg+'</td>' +
+                        '            <td>'+ r.money+'</td>' +
                         '            <td><a class="btn btn-default btn-sm" href="javascript:del('+r.snum+')">删除</a></td>' +
                         '        </tr>';
                     rList += li;
